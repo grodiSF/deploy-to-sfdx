@@ -15,25 +15,29 @@ const ex = 'deployMsg';
 
 logger.debug('I am a worker and I am up!');
 
+let amilocal=false;
 let keypath;
 // where will our cert live?
 if (process.env.LOCAL_ONLY_KEY_PATH){
 	// I'm fairly local
 	logger.debug('loading local key');
 	keypath = process.env.LOCAL_ONLY_KEY_PATH;
+	amilocal=true;
 } else {
 	// we're doing it in the cloud
 	logger.debug('creating cloud key');
 	fs.writeFileSync('/app/tmp/server.key', process.env.JWTKEY, 'utf8');
 	keypath = '/app/tmp/server.key';
 }
-
+let cmd='echo y | sfdx plugins:install sfdx-msm-plugin';
+if(amilocal)cmd='pwd';
 // load helpful plugins
-exec('echo y | sfdx plugins:install sfdx-msm-plugin')
+exec(cmd)
 // auth to the hub
 .then( (result) => {
 	logResult(result);
-	return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
+	if(amilocal)return exec('pwd');
+	else return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
 })  // OK, we've got our environment prepared now.  Let's auth to our org and verify
 .then( (result) => {
 	logResult(result);
@@ -52,13 +56,13 @@ exec('echo y | sfdx plugins:install sfdx-msm-plugin')
 				logger.debug(ok);
 			}
 		});
-
 		// ch.prefetch(1);
 
 		// this consumer eats deploys, creates local folders, and chops up the tasks into steps
 		ch.consume('deploys', (msg) => {
 			const visitor = ua(process.env.UA_ID || 0);
 			// do a whole bunch of stuff here!
+	
 			logger.debug(msg);
 			const msgJSON = JSON.parse(msg.content.toString());
 			logger.debug(msgJSON);

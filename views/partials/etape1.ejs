@@ -1,0 +1,17 @@
+
+<div class="slds-text-heading_medium">Etape 2: Création du modèle de donnée</div>
+
+<div class="slds-text-body_regular">
+Suivez les instructions pour créer le modèle de donnée vous même dans votre org.<br>
+Ensuite, vous pourrez finaliser le modèle en poussant la métadonée définie <a href="https://github.com/mjacquet/gestion-embauche/tree/DataModel/force-app/main/default" target="_blank">ici</a>.
+</div>
+
+<center><button class="slds-button slds-button_brand" onclick="launch();">Finaliser le Modèle de donnée</button></center>
+
+
+<script>
+    var launch=function(){
+        //console.log('launch','/?action=deployDM&SOusername='+localStorage.getItem("username"));
+        window.location.href='/?action=deployDM&SOusername='+localStorage.getItem("username");
+    }
+</script>
