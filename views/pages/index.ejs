@@ -250,6 +250,13 @@
                 window.location.href='/?action=nextstep&step=0';
             }
 
+  
+            var launch=function(){
+                //console.log('launch','/?action=deployDM&SOusername='+localStorage.getItem("username"));
+                window.location.href='/?action=deploy&step=<%= step%>&SOusername='+localStorage.getItem("username");
+            }
+
+
         </script>
         
 

@@ -69,11 +69,11 @@ app.get('/', (req, res) => {
     
 
   }
-  else if (action==='deployDM'){
+  else if (action==='deploy'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('load Data Model', {}).send();
-    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/DataModel');
+    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step'+req.query.step);
     message.SOusername=req.query.SOusername;
     console.log(message);
     mq.then( (mqConn) => {
