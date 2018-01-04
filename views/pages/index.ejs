@@ -104,7 +104,8 @@
             const deployId = deployIdInput.innerText;
             console.log('deployId', deployId);
             // works for both http and https
-            const HOST = 'ws://' + location.hostname + ':' + location.port + '/deploying/' + deployId;//location.href.replace(/^http/, 'ws');
+            let protoc = location.protocol=='https:'?'wss':'ws';
+            const HOST = protoc+'://' + location.hostname + ':' + location.port + '/deploying/' + deployId;//location.href.replace(/^http/, 'ws');
             let msgCounter = 0;
             console.log('host', HOST);
 
