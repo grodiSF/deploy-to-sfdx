@@ -7,21 +7,8 @@
                 
                 <% include ../partials/progress %>
                 <div class="slds-card">
-                      <% switch (step) {
-                        case 0 : %>
-                        <% include ../partials/etape0 %>
-                                <% break;
-                        
-                        case 1 : %>
-                        <% include ../partials/etape1 %>
-                                <% break;
-                        case 2 : %>
-                        <% include ../partials/etape2 %>
-                                <% break;
-                        
-                        
-                        
-                        } %>
+                        <%- include('../partials/etape'+step) %>
+                                            
                         <br/>
                         <button id="nextstepbtn" class="slds-button slds-button_brand slds-hide" onclick="window.location.href='/?action=nextstep&step=<%= step+1 %>'">Etape suivante</button>
                 
