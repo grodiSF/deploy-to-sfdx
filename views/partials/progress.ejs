@@ -52,38 +52,48 @@
               </button>
             </li>
             <li class="slds-progress__item <% if(step>5){ %>slds-is-completed<%}%> <% if(step==5){ %>slds-is-active<%}%>">
-                <button onclick="window.location.href='/?action=nextstep&step=5'" class="slds-button slds-progress__marker <% if(step>5){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Intégration">
+                <button onclick="window.location.href='/?action=nextstep&step=5'" class="slds-button slds-progress__marker <% if(step>5){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Rapports">
                       <% if(step>5){%>
                           <svg class="slds-button__icon" aria-hidden="true">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
                           </svg>
                           <%}%>
-                  <span class="slds-assistive-text">Step 5 </span>
+                  <span class="slds-assistive-text">Step 6 </span>
                 </button>
               </li>
               <li class="slds-progress__item <% if(step>6){ %>slds-is-completed<%}%> <% if(step==6){ %>slds-is-active<%}%>">
-                <button onclick="window.location.href='/?action=nextstep&step=6'" class="slds-button slds-progress__marker <% if(step>6){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Rapports">
+                <button onclick="window.location.href='/?action=nextstep&step=6'" class="slds-button slds-progress__marker <% if(step>6){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Mobilité">
                       <% if(step>6){%>
                           <svg class="slds-button__icon" aria-hidden="true">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
                           </svg>
                           <%}%>
-                  <span class="slds-assistive-text">Step 5 </span>
+                  <span class="slds-assistive-text">Step 7 </span>
                 </button>
               </li>
               <li class="slds-progress__item <% if(step>7){ %>slds-is-completed<%}%> <% if(step==7){ %>slds-is-active<%}%>">
-                <button onclick="window.location.href='/?action=nextstep&step=7'" class="slds-button slds-progress__marker <% if(step>7){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Développement">
+                <button onclick="window.location.href='/?action=nextstep&step=7'" class="slds-button slds-progress__marker <% if(step>7){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Intégration">
                       <% if(step>7){%>
                           <svg class="slds-button__icon" aria-hidden="true">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
                           </svg>
                           <%}%>
-                  <span class="slds-assistive-text">Step 5 </span>
+                  <span class="slds-assistive-text">Step 8 </span>
+                </button>
+              </li>
+              <li class="slds-progress__item <% if(step>8){ %>slds-is-completed<%}%> <% if(step==8){ %>slds-is-active<%}%>">
+                <button onclick="window.location.href='/?action=nextstep&step=8'" class="slds-button slds-progress__marker <% if(step>8){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Développement">
+                      <% if(step>8){%>
+                          <svg class="slds-button__icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
+                          </svg>
+                          <%}%>
+                  <span class="slds-assistive-text">Step 8 </span>
                 </button>
               </li>
           </ol>
           <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" role="progressbar">
-            <span class="slds-progress-bar__value" style="width: <%= (step/7)*100  %>%;">
+            <span class="slds-progress-bar__value" style="width: <%= (step/8)*100  %>%;">
               <span class="slds-assistive-text">Progress: 50%</span>
             </span>
           </div>
