@@ -21,6 +21,7 @@ const wsInstance = expressWs(app);
 
 app.use('/scripts', express.static(`${__dirname}/scripts`));
 app.use('/dist', express.static(`${__dirname}/dist`));
+app.use('/api', express.static(`${__dirname}/api`));
 
 app.use(bodyParser.urlencoded({
   extended: true
