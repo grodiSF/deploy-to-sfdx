@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('create org', {}).send();
-    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche');
+    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step0');
     console.log(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();

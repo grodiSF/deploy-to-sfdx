@@ -224,6 +224,9 @@
                     document.getElementById("spinner").setAttribute("style", "display : none");
                 } else if (content.includes('instanceUrl')) {
                    msgCounter--;
+                }
+                else if (content.includes('=== Source Status')) {
+                   msgCounter--;
                 }else {
                     // everything unspecified
                     defaultContent(content);
