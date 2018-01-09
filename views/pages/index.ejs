@@ -157,7 +157,9 @@
             }
             displayContent = function (content) {
                 // the login url
-                if (content.includes('ERROR')) {
+                if (content.includes('Permsets Assigned') || content.includes('Duplicate PermissionSetAssignment')) {
+                    defaultContent('Assigned Perm Sets (see console logs for details)');
+                } else if (content.includes('ERROR')) {
                     console.log('an error occurred');
                     console.log(content);
                     document.getElementById("errorBlock").setAttribute("style", "display : block");
@@ -197,8 +199,6 @@
                     // var element = document.getElementById("status");
                     // element.appendChild(para);
                     //refId
-                } else if (content.includes('Permsets Assigned') || content.includes('Duplicate PermissionSetAssignment')) {
-                    defaultContent('Assigned Perm Sets (see console logs for details)');
                 } else if (content.includes('Import Results')) {
                     defaultContent('Loaded some data (see console logs for details)');
                 } else if (content.includes('EXECUTION_FINISHED')) {
