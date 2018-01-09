@@ -19366,7 +19366,8 @@ a.slds-button--inverse:focus {
     page-break-after: avoid; } }
 
 body {
-  width: 1000px;
+  width:90%;
+  min-width: 1000px;
   margin: 0 auto;
   line-height: 1.5rem; }
 
