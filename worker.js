@@ -60,6 +60,7 @@ exec(cmd)
 
 		// this consumer eats deploys, creates local folders, and chops up the tasks into steps
 		ch.consume('deploys', (msg) => {
+			logger.debug('HEARD a message from the web');
 			const visitor = ua(process.env.UA_ID || 0);
 			// do a whole bunch of stuff here!
 	
@@ -118,7 +119,7 @@ exec(cmd)
 				} else {
 					logger.debug('got back parsed lines');
 					let localLineRunner = new lineRunner(msgJSON, parsedLines, ch, visitor);
-					return localLineRunner.runLines();
+					return localLineRunner.runLines();	
 				}
 			})
 			.then( () => {
