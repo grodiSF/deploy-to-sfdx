@@ -58,6 +58,8 @@
                                 <dd class="slds-item_detail" title="Description for first label" id="username"></dd>
                                 <dt class="slds-item_label slds-text-color_weak" title="Second Label">Password:</dt>
                                 <dd class="slds-item_detail" title="Description for second label" id="password"></dd>
+                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Instance Url:</dt>
+                                <dd class="slds-item_detail" title="Description for second label" id="instanceUrl"></dd>
                             </dl>
                         </div>
                     </article>
@@ -77,9 +79,6 @@
                         <div class="slds-tile__detail">
                                 <center>   
                                         <button onclick="reinit();" class="slds-button slds-button_destructive">Réinitilisation</button>
-                                </center>
-                                <center>   
-                                        <button onclick="reauth();" class="slds-button">Ré-authentifier</button>
                                 </center>
                             </div>
                     </article>
@@ -103,9 +102,11 @@
             var username=localStorage.getItem('username');
             var password=localStorage.getItem('password');
             var loginUrl=localStorage.getItem('loginUrl');
+            var instanceUrl=localStorage.getItem('instanceUrl');
             if(username!=null && password!=null && loginUrl!=null){
                 document.getElementById("username").innerHTML = username;
                 document.getElementById("password").innerHTML = password;
+                document.getElementById("instanceUrl").innerHTML = instanceUrl;
                 document.getElementById("passwordBlock").setAttribute("style", "display : block");
                 document.getElementById("loginUrl").href=loginUrl;
                 document.getElementById("noorg").setAttribute("style", "display : none");
@@ -196,7 +197,7 @@
                     // var element = document.getElementById("status");
                     // element.appendChild(para);
                     //refId
-                } else if (content.includes('Permsets Assigned')) {
+                } else if (content.includes('Permsets Assigned') || content.includes('Duplicate PermissionSetAssignment')) {
                     defaultContent('Assigned Perm Sets (see console logs for details)');
                 } else if (content.includes('Import Results')) {
                     defaultContent('Loaded some data (see console logs for details)');
@@ -208,17 +209,28 @@
                     localStorage.setItem("username",goodstuff.result.username);
                     // document.getElementById("passwordBlock").setAttribute("style", "display : block");
                     defaultContent('Scratch org created with username ' + goodstuff.result.username);
-                } else if (content.includes('ALLDONE')) {
+                } else if (content.includes('accessToken')) {
+                    let goodstuff = JSON.parse(content);
+                    console.log(goodstuff);
+                    localStorage.setItem("accessToken",goodstuff.result.accessToken);
+                    localStorage.setItem("instanceUrl",goodstuff.result.instanceUrl);
+                    document.getElementById("instanceUrl").innerHTML = goodstuff.result.instanceUrl;
+                    // document.getElementById("passwordBlock").setAttribute("style", "display : block");
+                    //defaultContent('Got Instance ' + goodstuff.result.Instance_url);
+                }else if (content.includes('ALLDONE')) {
                     //document.getElementById("loaderBlock").setAttribute("style", "display : none");
                     // document.getElementById("passwordBlock").setAttribute("style", "display : block");
                     document.getElementById("nextstepbtn").setAttribute("style", "display : block");
                     document.getElementById("spinner").setAttribute("style", "display : none");
-                } else {
+                } else if (content.includes('instanceUrl')) {
+                   msgCounter--;
+                }else {
                     // everything unspecified
                     defaultContent(content);
                 }
 
             }
+            
 
 
             defaultContent = function (content) {
@@ -241,15 +253,10 @@
                 document.getElementById("loginBlock").setAttribute("style", "display : none");
                 window.location.href='/?action=nextstep&step=0';
             }
-            
-            var reauth = function(){
-               
-                window.location.href='/?action=reauth&step=<%= step%>&SOusername='+localStorage.getItem("username");
-            }
   
             var launch=function(){
                 //console.log('launch','/?action=deployDM&SOusername='+localStorage.getItem("username"));
-                window.location.href='/?action=deploy&step=<%= step%>&SOusername='+localStorage.getItem("username");
+                window.location.href='/?action=deploy&step=<%= step%>&instanceUrl='+localStorage.getItem("instanceUrl")+'&SOusername='+localStorage.getItem("username")+'&accessToken='+localStorage.getItem("accessToken");
             }
 
 

@@ -45,6 +45,30 @@ app.get('/', (req, res) => {
     console.log(req.query.step);
     res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
   }
+  else if(action=='reauth'){
+    const visitor = ua(process.env.UA_ID);
+    visitor.pageview('/').send();
+    visitor.event('create org', {}).send(); 
+    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/reauth');
+    message.SOusername=req.query.SOusername;
+    console.log(message);
+    mq.then( (mqConn) => {
+      let ok = mqConn.createChannel();
+      ok = ok.then((ch) => {
+        ch.assertQueue('deploys', { durable: true });
+        ch.sendToQueue('deploys', new Buffer(JSON.stringify(message)));
+      });
+      return ok;
+    }).then( () => {
+      // return the deployId page
+      res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
+    }, (mqerr) => {
+      logger.error(mqerr);
+      return res.redirect('/error', {
+        customError : mqerr
+      });
+    });
+  }
   else if(action=='createSO'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
@@ -76,6 +100,8 @@ app.get('/', (req, res) => {
     visitor.event('load Data Model', {}).send();
     const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step'+req.query.step);
     message.SOusername=req.query.SOusername;
+    message.instanceUrl=req.query.instanceUrl;
+    message.accessToken=req.query.accessToken;
     console.log(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
