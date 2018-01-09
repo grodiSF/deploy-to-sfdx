@@ -91,9 +91,19 @@
                   <span class="slds-assistive-text">Step 8 </span>
                 </button>
               </li>
+              <li class="slds-progress__item <% if(step>9){ %>slds-is-completed<%}%> <% if(step==9){ %>slds-is-active<%}%>">
+                <button onclick="window.location.href='/?action=nextstep&step=9'" class="slds-button slds-progress__marker <% if(step>9){ %>slds-progress__marker slds-progress__marker_icon<%}%>" title="Fin">
+                      <% if(step>9){%>
+                          <svg class="slds-button__icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
+                          </svg>
+                          <%}%>
+                  <span class="slds-assistive-text">Step 9 </span>
+                </button>
+              </li>
           </ol>
           <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" role="progressbar">
-            <span class="slds-progress-bar__value" style="width: <%= (step/8)*100  %>%;">
+            <span class="slds-progress-bar__value" style="width: <%= (step/9)*100  %>%;">
               <span class="slds-assistive-text">Progress: 50%</span>
             </span>
           </div>
