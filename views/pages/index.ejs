@@ -54,9 +54,9 @@
                         <h3 class="slds-tile__title slds-truncate" title="Login to Org">Credentials</h3>
                         <div class="slds-tile__detail">
                             <dl class="slds-list_horizontal slds-wrap">
-                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">Username:</dt>
+                                <dt class="slds-item_label slds-text-color_weak" title="First Label">Username:</dt>
                                 <dd class="slds-item_detail slds-truncate" title="Description for first label" id="username"></dd>
-                                <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Second Label">Password:</dt>
+                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Password:</dt>
                                 <dd class="slds-item_detail slds-truncate" title="Description for second label" id="password"></dd>
                             </dl>
                         </div>
@@ -77,6 +77,9 @@
                         <div class="slds-tile__detail">
                                 <center>   
                                         <button onclick="reinit();" class="slds-button slds-button_destructive">Réinitilisation</button>
+                                </center>
+                                <center>   
+                                        <button onclick="reauth();" class="slds-button">Ré-authentifier</button>
                                 </center>
                             </div>
                     </article>
@@ -238,7 +241,11 @@
                 document.getElementById("loginBlock").setAttribute("style", "display : none");
                 window.location.href='/?action=nextstep&step=0';
             }
-
+            
+            var reauth = function(){
+               
+                window.location.href='/?action=reauth&step=<%= step%>&SOusername='+localStorage.getItem("username");
+            }
   
             var launch=function(){
                 //console.log('launch','/?action=deployDM&SOusername='+localStorage.getItem("username"));
