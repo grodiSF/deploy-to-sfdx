@@ -132,7 +132,7 @@ exec(cmd)
 				return setTimeoutPromise(1000 * 60, 'foobar');
 			})
 			.then(() => {
-				exec(`cd tmp;rm -rf ${msgJSON.deployId}`);
+				exec(`cd tmp;`);//rm -rf ${msgJSON.deployId}
 			})
 			.then((cleanResult) => {
 				logResult(cleanResult);
