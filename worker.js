@@ -1,4 +1,3 @@
-
 const mq = require('amqplib').connect(process.env.CLOUDAMQP_URL || 'amqp://localhost');
 const exec = require('child-process-promise').exec;
 const fs = require('fs');
@@ -15,8 +14,11 @@ const ex = 'deployMsg';
 
 logger.debug('I am a worker and I am up!');
 
-let amilocal=false;
+//let amilocal=false;
+
+/* used for JWT flow
 let keypath;
+
 // where will our cert live?
 if (process.env.LOCAL_ONLY_KEY_PATH){
 	// I'm fairly local
@@ -28,19 +30,19 @@ if (process.env.LOCAL_ONLY_KEY_PATH){
 	logger.debug('creating cloud key');
 	fs.writeFileSync('/app/tmp/server.key', process.env.JWTKEY, 'utf8');
 	keypath = '/app/tmp/server.key';
-}
+}*/
 let cmd='echo y | sfdx plugins:install sfdx-msm-plugin';
-if(amilocal)cmd='pwd';
+//if(amilocal)cmd='pwd';
 // load helpful plugins
 exec(cmd)
 // auth to the hub
 .then( (result) => {
 	logResult(result);
-	if(amilocal)return exec('pwd');
+	if(process.env.LOCAL_ONLY_AUTHURL_PATH)return exec('pwd');
 	else {
+		//used for JWT flow
 		//return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
 		fs.writeFileSync('/app/tmp/devhub.key',process.env.DXLOGINURL,'utf8');
-		
 		return exec(`sfdx force:auth:sfdxurl:store -f /app/tmp/devhub.key --setdefaultdevhubusername -a deployBotHub`);
 		
 	}
@@ -138,7 +140,7 @@ exec(cmd)
 				return setTimeoutPromise(1000 * 60, 'foobar');
 			})
 			.then(() => {
-				exec(`cd tmp;`);//rm -rf ${msgJSON.deployId}
+				exec(`cd tmp;rm -rf ${msgJSON.deployId}`);
 			})
 			.then((cleanResult) => {
 				logResult(cleanResult);
