@@ -37,7 +37,13 @@ exec(cmd)
 .then( (result) => {
 	logResult(result);
 	if(amilocal)return exec('pwd');
-	else return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
+	else {
+		//return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
+		fs.writeFileSync('/app/tmp/devhub.key',process.env.DXLOGINURL,'utf8');
+		
+		return exec(`sfdx force:auth:sfdxurl:store -f /app/tmp/devhub.key --setdefaultdevhubusername -a deployBotHub`);
+		
+	}
 })  // OK, we've got our environment prepared now.  Let's auth to our org and verify
 .then( (result) => {
 	logResult(result);
