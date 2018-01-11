@@ -14,33 +14,12 @@ const ex = 'deployMsg';
 
 logger.debug('I am a worker and I am up!');
 
-//let amilocal=false;
-
-/* used for JWT flow
-let keypath;
-
-// where will our cert live?
-if (process.env.LOCAL_ONLY_KEY_PATH){
-	// I'm fairly local
-	logger.debug('loading local key');
-	keypath = process.env.LOCAL_ONLY_KEY_PATH;
-	amilocal=true;
-} else {
-	// we're doing it in the cloud
-	logger.debug('creating cloud key');
-	fs.writeFileSync('/app/tmp/server.key', process.env.JWTKEY, 'utf8');
-	keypath = '/app/tmp/server.key';
-}*/
-let cmd='echo y | sfdx plugins:install sfdx-msm-plugin';
-//if(amilocal)cmd='pwd';
 // load helpful plugins
-exec(cmd)
+exec('echo y | sfdx plugins:install sfdx-msm-plugin')
 // auth to the hub
 .then( (result) => {
 	logResult(result);
 	if(process.env.DXLOGINURL){
-		//used for JWT flow
-		//return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
 		fs.writeFileSync('/app/tmp/devhub.key',process.env.DXLOGINURL,'utf8');
 		return exec(`sfdx force:auth:sfdxurl:store -f /app/tmp/devhub.key --setdefaultdevhubusername -a deployBotHub`);
 	}

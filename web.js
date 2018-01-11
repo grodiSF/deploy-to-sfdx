@@ -1,5 +1,3 @@
-// https://hosted-scratch-qa.herokuapp.com/launch?template=https://github.com/mshanemc/DF17integrationWorkshops
-
 const ua = require('universal-analytics');
 const express = require('express');
 const expressWs = require('express-ws');
@@ -45,35 +43,11 @@ app.get('/', (req, res) => {
     logger.debug(req.query.step);
     res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
   }
-  else if(action=='reauth'){
-    const visitor = ua(process.env.UA_ID);
-    visitor.pageview('/').send();
-    visitor.event('create org', {}).send(); 
-    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/reauth');
-    message.SOusername=req.query.SOusername;
-    logger.debug(message);
-    mq.then( (mqConn) => {
-      let ok = mqConn.createChannel();
-      ok = ok.then((ch) => {
-        ch.assertQueue('deploys', { durable: true });
-        ch.sendToQueue('deploys', new Buffer(JSON.stringify(message)));
-      });
-      return ok;
-    }).then( () => {
-      // return the deployId page
-      res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
-    }, (mqerr) => {
-      logger.error(mqerr);
-      return res.redirect('/error', {
-        customError : mqerr
-      });
-    });
-  }
   else if(action=='createSO'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('create org', {}).send();
-    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step0');
+    const message = msgBuilder(process.env.GIT_REPOURL+'/tree/step0');
     logger.debug(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
@@ -98,10 +72,8 @@ app.get('/', (req, res) => {
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('load Data Model', {}).send();
-    const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step'+req.query.step);
+    const message = msgBuilder(process.env.GIT_REPOURL+'/tree/step'+req.query.step);
     message.SOusername=req.query.SOusername;
-    message.instanceUrl=req.query.instanceUrl;
-    message.accessToken=req.query.accessToken;
    // console.log(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
@@ -121,10 +93,6 @@ app.get('/', (req, res) => {
     });
     
   }
-
-
-
-
 });
 
 app.get('/launch', (req, res) => {
