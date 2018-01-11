@@ -35,14 +35,14 @@ app.get('/', (req, res) => {
   //const message = msgBuilder(req.query.template);
   // analytics
   let action = req.query.action;
-  console.log(action);
+  logger.debug(action);
   if(typeof action==='undefined'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     res.render('pages/index', { deployId:'',step:0 });
   }
   else if(action=='nextstep'){
-    console.log(req.query.step);
+    logger.debug(req.query.step);
     res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
   }
   else if(action=='reauth'){
@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
     visitor.event('create org', {}).send(); 
     const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/reauth');
     message.SOusername=req.query.SOusername;
-    console.log(message);
+    logger.debug(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
       ok = ok.then((ch) => {
@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
     visitor.pageview('/').send();
     visitor.event('create org', {}).send();
     const message = msgBuilder('https://github.com/mjacquet/gestion-embauche/tree/step0');
-    console.log(message);
+    logger.debug(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
       ok = ok.then((ch) => {
@@ -102,7 +102,7 @@ app.get('/', (req, res) => {
     message.SOusername=req.query.SOusername;
     message.instanceUrl=req.query.instanceUrl;
     message.accessToken=req.query.accessToken;
-    console.log(message);
+   // console.log(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
       ok = ok.then((ch) => {
@@ -178,7 +178,7 @@ mq.then( (mqConn) => {
 	let ok = mqConn.createChannel();
 	ok = ok.then((ch) => {
     logger.debug('channel created');
-    ch.assertExchange(ex, 'fanout', { durable: false })
+    return ch.assertExchange(ex, 'fanout', { durable: false })
     .then( (exch) => {
       logger.debug('exchange asserted');
       return ch.assertQueue('', { exclusive: true });

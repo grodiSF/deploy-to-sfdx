@@ -38,5 +38,6 @@
   ],
   "addons": [{
       "plan": "cloudamqp:lemur"
-  }]
+  },
+  "heroku-redis"]
 }
