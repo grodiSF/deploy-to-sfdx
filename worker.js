@@ -38,16 +38,21 @@ exec(cmd)
 // auth to the hub
 .then( (result) => {
 	logResult(result);
-	if(process.env.LOCAL_ONLY_AUTHURL_PATH)return exec('pwd');
-	else {
+	if(process.env.DXLOGINURL){
 		//used for JWT flow
 		//return exec(`sfdx force:auth:jwt:grant --clientid ${process.env.CONSUMERKEY} --username ${process.env.HUB_USERNAME} --jwtkeyfile ${keypath} --setdefaultdevhubusername -a deployBotHub`);
 		fs.writeFileSync('/app/tmp/devhub.key',process.env.DXLOGINURL,'utf8');
 		return exec(`sfdx force:auth:sfdxurl:store -f /app/tmp/devhub.key --setdefaultdevhubusername -a deployBotHub`);
-		
+	}
+	else {
+		return exec('pwd');
 	}
 })  // OK, we've got our environment prepared now.  Let's auth to our org and verify
 .then( (result) => {
+	if(process.env.DXLOGINURL){
+		logger.debug('destroy fs key file');
+		exec(`rm /app/tmp/devhub.key`);
+	}
 	logResult(result);
 	return mq;
 })
