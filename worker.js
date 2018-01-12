@@ -14,8 +14,10 @@ const ex = 'deployMsg';
 
 logger.debug('I am a worker and I am up!');
 
-// load helpful plugins
-exec('echo y | sfdx plugins:install sfdx-msm-plugin')
+// load helpful plugins in cloud only
+let cmd='pwd';
+if(process.env.DXLOGINURL)cmd='echo y | sfdx plugins:install sfdx-msm-plugin'
+exec(cmd)
 // auth to the hub
 .then( (result) => {
 	logResult(result);

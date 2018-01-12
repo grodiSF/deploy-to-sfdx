@@ -7,12 +7,13 @@
                 
                 <% include ../partials/progress %>
                 <div class="slds-card">
-                        <%- include('../partials/etape'+step) %>
-                                            
-                        <br/>
-                        
-                        <button id="nextstepbtn" class="slds-button slds-button_brand slds-hide" onclick="window.location.href='/?action=nextstep&step=<%= step+1 %>'">Etape suivante</button>
-                
+                        <div class="slds-text-heading_medium"><%- stepInfo.title %></div>
+                        <div class="slds-text-body_regular">
+                                <%- stepInfo.body %>
+                        </div>
+                        <center><button class="slds-button slds-button_brand" onclick="launch();"><%- stepInfo.button %></button></center>                                          
+                        <br/>               
+                        <button id="nextstepbtn" class="slds-button slds-button_brand slds-hide" onclick="window.location.href='/?action=nextstep&step=<%= step+1 %>'">Etape suivante</button>          
                 </div> 
 
                 <div id="errorBlock" style="display: none;">
@@ -31,7 +32,7 @@
 
                     </div>
                 </div>
-                <%if(deployId!=''){%> Statut des actions pour le déploiement:<%}%> 
+                <%if(deployId!=''){%> Deployment status for:<%}%> 
                 <strong id="deployId"><%= deployId %></strong>
                     <%if(deployId!=''){%>
                         <img id="spinner" src="../dist/assets/images/loader.gif" style="width:27px;" />
@@ -43,12 +44,12 @@
                 <div class="slds-card__header slds-grid">
                     <header class="slds-has-flexi-truncate">
                         <h2>
-                            <span class="slds-text-heading_small">Informations sur l'org</span>
+                            <span class="slds-text-heading_small">Org infos</span>
                         </h2>
                     </header>
                 </div>
                 <div class="slds-card__body slds-card__body_inner">
-                    <p id="noorg">Aucune Organisation</p>
+                    <p id="noorg">No Active Organisation</p>
 
                     <article class="slds-tile" id="passwordBlock" style="display: none;">
                         <h3 class="slds-tile__title slds-truncate" title="Login to Org">Credentials</h3>
@@ -66,7 +67,7 @@
                     <article class="slds-tile" id="loginBlock" style="display: none;">
                             <div class="slds-tile__detail">
                                 <center>   
-                                    <a href="" id="loginUrl" target="_blank" class="slds-button slds-button_brand">Ouvrir</a>
+                                    <a href="" id="loginUrl" target="_blank" class="slds-button slds-button_brand">Open</a>
                                 </center>
                             </div>
                     </article>
@@ -75,10 +76,10 @@
                     <br/>
                     <br/>
                     <article class="slds-tile">
-                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">A n'utiliser qu'en dernier recours! </h3>    
+                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">In last resort, start over! </h3>    
                         <div class="slds-tile__detail">
                                 <center>   
-                                        <button onclick="reinit();" class="slds-button slds-button_destructive">Réinitilisation</button>
+                                        <button onclick="reinit();" class="slds-button slds-button_destructive">Re-init</button>
                                 </center>
                             </div>
                     </article>
@@ -170,7 +171,6 @@
                     link.href = goodstuff.result.url;
                     localStorage.setItem("loginUrl",goodstuff.result.url);
                     document.getElementById("noorg").setAttribute("style", "display : none");
-                    //link.innerHTML = goodstuff.result.url;
                     document.getElementById("loginBlock").setAttribute("style", "display : block");
                 } else if (content.includes('password')) {
                     let goodstuff = JSON.parse(content);
@@ -207,7 +207,6 @@
                     let goodstuff = JSON.parse(content);
                     document.getElementById("username").innerHTML = goodstuff.result.username;
                     localStorage.setItem("username",goodstuff.result.username);
-                    // document.getElementById("passwordBlock").setAttribute("style", "display : block");
                     defaultContent('Scratch org created with username ' + goodstuff.result.username);
                 } else if (content.includes('accessToken')) {
                     let goodstuff = JSON.parse(content);
@@ -215,11 +214,7 @@
                     localStorage.setItem("accessToken",goodstuff.result.accessToken);
                     localStorage.setItem("instanceUrl",goodstuff.result.instanceUrl);
                     document.getElementById("instanceUrl").innerHTML = goodstuff.result.instanceUrl;
-                    // document.getElementById("passwordBlock").setAttribute("style", "display : block");
-                    //defaultContent('Got Instance ' + goodstuff.result.Instance_url);
                 }else if (content.includes('ALLDONE')) {
-                    //document.getElementById("loaderBlock").setAttribute("style", "display : none");
-                    // document.getElementById("passwordBlock").setAttribute("style", "display : block");
                     document.getElementById("nextstepbtn").setAttribute("style", "display : block");
                     document.getElementById("spinner").setAttribute("style", "display : none");
                 } else if (content.includes('instanceUrl')) {
@@ -258,8 +253,7 @@
             }
   
             var launch=function(){
-                //console.log('launch','/?action=deployDM&SOusername='+localStorage.getItem("username"));
-                window.location.href='/?action=deploy&step=<%= step%>&SOusername='+localStorage.getItem("username");//+'&instanceUrl='+localStorage.getItem("instanceUrl")+'&accessToken='+localStorage.getItem("accessToken");
+                window.location.href='/?action=deploy&step=<%= step%>&SOusername='+localStorage.getItem("username");
             }
 
 

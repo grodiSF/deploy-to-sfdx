@@ -29,21 +29,23 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 // app.use(cookieParser());
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   //const message = msgBuilder(req.query.template);
   // analytics
   let action = req.query.action;
   logger.debug(action);
   if(typeof action==='undefined'){
+    const message = await msgBuilder(process.env.GIT_REPOURL+'/tree/step0');
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
-    res.render('pages/index', { deployId:'',step:0 });
+    res.render('pages/index', { deployId:'',step:0,stepInfo:message.stepInfo,steps:message.steps });
   }
   else if(action=='nextstep'){
+    const message = await msgBuilder(process.env.GIT_REPOURL+'/tree/step'+req.query.step);
     logger.debug(req.query.step);
-    res.render('pages/index', { deployId:'',step:parseInt(req.query.step) });
+    res.render('pages/index', { deployId:'',step:parseInt(req.query.step),stepInfo:message.stepInfo,steps:message.steps });
   }
-  else if(action=='createSO'){
+  /*else if(action=='createSO'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('create org', {}).send();
@@ -67,14 +69,14 @@ app.get('/', (req, res) => {
     });
     
 
-  }
+  }*/
   else if (action==='deploy'){
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
     visitor.event('load Data Model', {}).send();
-    const message = msgBuilder(process.env.GIT_REPOURL+'/tree/step'+req.query.step);
-    message.SOusername=req.query.SOusername;
-   // console.log(message);
+    const message = await msgBuilder(process.env.GIT_REPOURL+'/tree/step'+req.query.step);
+    if(req.query.step>0)message.SOusername=req.query.SOusername;
+    console.log(message);
     mq.then( (mqConn) => {
       let ok = mqConn.createChannel();
       ok = ok.then((ch) => {
@@ -84,7 +86,7 @@ app.get('/', (req, res) => {
       return ok;
     }).then( () => {
       // return the deployId page
-      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step)});
+      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step),stepInfo:message.stepInfo,steps:message.steps});
     }, (mqerr) => {
       logger.error(mqerr);
       return res.redirect('/error', {

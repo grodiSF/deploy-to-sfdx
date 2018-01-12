@@ -39,7 +39,8 @@
     "universal-analytics": "^0.4.15",
     "utf-8-validate": "3.0.3",
     "ws": "3.2.0",
-    "ioredis": "^3.2.1"
+    "ioredis": "^3.2.1",
+    "got": "^8.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
