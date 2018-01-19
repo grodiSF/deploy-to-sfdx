@@ -2,7 +2,7 @@
 
 ## Purpose
 
-You have a dev hub, and an sfdx repo.  You'd like to let people spin up scratch orgs based on the repo, and have step by step approach to define the metadata, based on github  branches. In addition, you audience doesn't have any access to teh devhub or the CLI:
+You have a dev hub, and an sfdx repo.  You'd like to let people spin up scratch orgs based on the repo, and have step by step approach to define the metadata, based on github  branches. In addition, you audience doesn't have any access to a devhub or the CLI:
 * because they might not be developers (think admins, or even end users in a training scenario)
 * because they might not be Salesforce developers (say you built an app and give your designer/CSS person github access to "make it cool")
 * because you might have dev hub access and you don't want to give it to them
@@ -112,4 +112,5 @@ In each branch, you will need to have:
 ---
 ## Example Repos with all necessary files and branches
 
+https://github.com/mjacquet/jobrequisitions
 https://github.com/mjacquet/gestion-embauche
