@@ -86,7 +86,7 @@ app.get('/', async (req, res) => {
       return ok;
     }).then( () => {
       // return the deployId page
-      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step)steps:message.steps});
+      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step),steps:message.steps});
     }, (mqerr) => {
       logger.error(mqerr);
       return res.redirect('/error', {
