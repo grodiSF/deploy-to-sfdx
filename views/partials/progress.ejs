@@ -4,13 +4,13 @@
             
               <% for(let i=0; i<steps.length ; i++){ %>
                   <li class="slds-progress__item  <% if(step>i){ %>slds-is-completed<%}%> <% if(step==i){ %>slds-is-active<%}%>">
-                  <button onclick="window.location.href='/?action=nextstep&step=<%= i %>'" class="slds-button slds-progress__marker <% if(step>i){ %>slds-button_icon slds-progress__marker_icon<%}%>" title="<%= steps[i] %>">
+                  <button onclick="window.location.href='/?action=nextstep&step=<%= i %>'" class="slds-button slds-progress__marker <% if(step>i){ %>slds-button_icon slds-progress__marker_icon<%}%>" title="<%= steps[i].title %>">
                         <% if(step>i){%>
                     <svg class="slds-button__icon" aria-hidden="true">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../dist/assets/icons/utility-sprite/svg/symbols.svg#success" />
                     </svg>
                     <%}%>
-                    <span class="slds-assistive-text"><%= steps[i] %></span>
+                    <span class="slds-assistive-text"><%= steps[i].title %></span>
                   </button>
                 </li>
              <% }%>

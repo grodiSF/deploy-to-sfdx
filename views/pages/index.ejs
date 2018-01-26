@@ -7,11 +7,11 @@
                 
                 <% include ../partials/progress %>
                 <div class="slds-card">
-                        <div class="slds-text-heading_medium"><%- stepInfo.title %></div>
+                        <div class="slds-text-heading_medium"><%- steps[step].title %></div>
                         <div class="slds-text-body_regular">
-                                <%- stepInfo.body %>
+                                <%- steps[step].body %>
                         </div>
-                        <center><button class="slds-button slds-button_brand" onclick="launch();"><%- stepInfo.button %></button></center>                                          
+                        <center><button class="slds-button slds-button_brand" onclick="launch();"><%- steps[step].button %></button></center>                                          
                         <br/>               
                         <button id="nextstepbtn" class="slds-button slds-button_brand slds-hide" onclick="window.location.href='/?action=nextstep&step=<%= step+1 %>'">Next Step</button>          
                 </div> 

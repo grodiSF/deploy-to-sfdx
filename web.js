@@ -38,12 +38,12 @@ app.get('/', async (req, res) => {
     const message = await msgBuilder(process.env.GIT_REPOURL+'/tree/step0');
     const visitor = ua(process.env.UA_ID);
     visitor.pageview('/').send();
-    res.render('pages/index', { deployId:'',step:0,stepInfo:message.stepInfo,steps:message.steps });
+    res.render('pages/index', { deployId:'',step:0,steps:message.steps });
   }
   else if(action=='nextstep'){
     const message = await msgBuilder(process.env.GIT_REPOURL+'/tree/step'+req.query.step);
     logger.debug(req.query.step);
-    res.render('pages/index', { deployId:'',step:parseInt(req.query.step),stepInfo:message.stepInfo,steps:message.steps });
+    res.render('pages/index', { deployId:'',step:parseInt(req.query.step),steps:message.steps });
   }
   /*else if(action=='createSO'){
     const visitor = ua(process.env.UA_ID);
@@ -86,7 +86,7 @@ app.get('/', async (req, res) => {
       return ok;
     }).then( () => {
       // return the deployId page
-      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step),stepInfo:message.stepInfo,steps:message.steps});
+      return res.render('pages/index', { deployId: message.deployId ,step:parseInt(req.query.step)steps:message.steps});
     }, (mqerr) => {
       logger.error(mqerr);
       return res.redirect('/error', {

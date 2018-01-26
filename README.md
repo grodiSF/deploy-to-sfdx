@@ -89,24 +89,25 @@ if **hosted-scratch-qa** is the name of your app
 So you need a target repo to deploy (see examples below).  
 
 You will need to have a steps.json file in the master branch.
-This is a simple json array with the title of each steps
+This is a simple json array of object with the title, body and button label for each steps
 
 ```json
-["step0 Title","step1 Title","step2 Title"]
+[{
+    "title":"Title of the step 1",
+    "body":"Explanation of what to do in this step 1",
+    "button":"Title of the button that launch the deploy 1"
+},
+{
+    "title":"Title of the step 2",
+    "body":"Explanation of what to do in this step 2",
+    "button":"Title of the button that launch the deploy 2"
+}]
 ``` 
 
 Then, you will need to create a separate branch for each step named "stepn" (ie: step0,step1,step2,etc);
 
 In each branch, you will need to have:
 * an orgInit.sh file listing all the sfdx commands that will be executed by the deployer. Remember, no bash metacharacters and only sfdx commands are allowed (We can't let anyone run any arbitrary command on our servers...security, yo!) That lets you create records, assign permsets, create users, install packages, run tests, generate passwords, and do anything you can do with an SFDX command
-* a step.json file with the content thta will be displayed in the portal for this step:
-```json
-{
-    "title":"Title of the step",
-    "body":"Explanation of what to do in this step",
-    "button":"Title of the button that launch the deploy"
-}
-```
 * the sfdx source that will be pushed 
 
 ---
