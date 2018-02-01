@@ -20,19 +20,18 @@
                     <div class="slds-notify_container slds-is-relative slds-m-bottom_large sfdx-wrap">
 
                         <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
-                            <span class="slds-assistive-text">Error</span>
+                            <span class="slds-assistive-text">Erreur</span>
 
                             <div class="slds-notify__content">
                                 <h2 class="slds-text-heading_small ">
-                                    <strong id="errorTest">An error occurred while deploying.</strong>&nbsp;See the browser console logs for more
-                                    information.
+                                    <strong id="errorTest">Une erreur est survenue durant le déploiement.</strong>&nbsp;Voir la console de développement pour plus de détail.
                                 </h2>
                             </div>
                         </div>
 
                     </div>
                 </div>
-                <%if(deployId!=''){%> Deployment status for:<%}%> 
+                <%if(deployId!=''){%> Statut du déploiement :<%}%> 
                 <strong id="deployId"><%= deployId %></strong>
                     <%if(deployId!=''){%>
                         <img id="spinner" src="../dist/assets/images/loader.gif" style="width:27px;" />
@@ -44,22 +43,22 @@
                 <div class="slds-card__header slds-grid">
                     <header class="slds-has-flexi-truncate">
                         <h2>
-                            <span class="slds-text-heading_small">Org infos</span>
+                            <span class="slds-text-heading_small">Informations</span>
                         </h2>
                     </header>
                 </div>
                 <div class="slds-card__body slds-card__body_inner">
-                    <p id="noorg">No Active Organisation</p>
+                    <p id="noorg">Pas d'organisation active</p>
 
                     <article class="slds-tile" id="passwordBlock" style="display: none;">
-                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">Credentials</h3>
+                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">Pour se connecter</h3>
                         <div class="slds-tile__detail">
                             <dl class="slds-list_horizontal slds-wrap">
-                                <dt class="slds-item_label slds-text-color_weak" title="First Label">Username:</dt>
+                                <dt class="slds-item_label slds-text-color_weak" title="First Label">Nom d'utilisateur:</dt>
                                 <dd class="slds-item_detail" title="Description for first label" id="username"></dd>
-                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Password:</dt>
+                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Mot de passe:</dt>
                                 <dd class="slds-item_detail" title="Description for second label" id="password"></dd>
-                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Instance Url:</dt>
+                                <dt class="slds-item_label slds-text-color_weak" title="Second Label">Url:</dt>
                                 <dd class="slds-item_detail" title="Description for second label" id="instanceUrl"></dd>
                             </dl>
                         </div>
@@ -67,7 +66,7 @@
                     <article class="slds-tile" id="loginBlock" style="display: none;">
                             <div class="slds-tile__detail">
                                 <center>   
-                                    <a href="" id="loginUrl" target="_blank" class="slds-button slds-button_brand">Open</a>
+                                    <a href="" id="loginUrl" target="_blank" class="slds-button slds-button_brand">Ouvrir</a>
                                 </center>
                             </div>
                     </article>
@@ -76,10 +75,10 @@
                     <br/>
                     <br/>
                     <article class="slds-tile">
-                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">In last resort, start over! </h3>    
+                        <h3 class="slds-tile__title slds-truncate" title="Login to Org">En dernier cours, recommencez de zéro. </h3>    
                         <div class="slds-tile__detail">
                                 <center>   
-                                        <button onclick="reinit();" class="slds-button slds-button_destructive">Re-init</button>
+                                        <button onclick="reinit();" class="slds-button slds-button_destructive">Ré-initialiser</button>
                                 </center>
                             </div>
                     </article>
